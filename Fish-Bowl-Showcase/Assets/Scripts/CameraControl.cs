@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CamLook : MonoBehaviour
+public class CameraControl : MonoBehaviour
 {
     public float Sensitivity {
 		get { return sensitivity; }
 		set { sensitivity = value; }
 	}
+
+    [SerializeField] GameObject player;
 	[Range(0.1f, 9f)][SerializeField] float sensitivity = 2f;
 	[Tooltip("Limits vertical camera rotation. Prevents the flipping that happens when rotation goes above 90.")]
+
 	[Range(0f, 90f)][SerializeField] float yRotationLimit = 88f;
 
 	Vector2 rotation = Vector2.zero;
@@ -17,6 +20,7 @@ public class CamLook : MonoBehaviour
 	const string yAxis = "Mouse Y";
 
 	void Update(){
+        transform.position = player.transform.position;
 		rotation.x += Input.GetAxis(xAxis) * sensitivity;
 		rotation.y += Input.GetAxis(yAxis) * sensitivity;
 		rotation.y = Mathf.Clamp(rotation.y, -yRotationLimit, yRotationLimit);
