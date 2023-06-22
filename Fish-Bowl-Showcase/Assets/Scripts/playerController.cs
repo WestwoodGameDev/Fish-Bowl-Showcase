@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
 
@@ -8,7 +9,13 @@ public class playerController : MonoBehaviour
 
     public Animator anim;
     private Rigidbody rb;
+    private CapsuleCollider collider;
     public LayerMask layerMask;
+
+    public GameObject camera;
+
+
+    private float distToGround;
 
     public bool grounded;
    
@@ -16,7 +23,8 @@ public class playerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();   
+        
+        rb = transform.GetComponent<Rigidbody>();   
     }
 
     private void FixedUpdate()
@@ -27,16 +35,14 @@ public class playerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-
-    }
+    
     private void Jump()
     {
           if (Input.GetKeyDown(KeyCode.Space) && this.grounded)
         {
             this.rb.AddForce(Vector3.up * 6, ForceMode.Impulse);
-          //  anim.SetBool("jump", true);
+            
+            //anim.SetBool("jump", true);
         }
        
        // this.anim.SetBool("jump", false);
@@ -45,9 +51,11 @@ public class playerController : MonoBehaviour
 
     private void Grounded()
     {
-        if(Physics.CheckSphere(this.transform.position + Vector3.down, 1.6f, layerMask))
+      //  if(Physics.CheckSphere(this.transform.position + Vector3.down , distToGround, layerMask))
+      if(Physics.Raycast(this.transform.position, Vector3.down, 0.6f, layerMask))
         {
             this.grounded = true;
+            //this.anim.SetBool("jump", true);
         }
         else
         {
@@ -71,10 +79,13 @@ public class playerController : MonoBehaviour
 
         movement.Normalize();
 
+
         this.transform.position += movement * 0.04f;
 
         this.anim.SetFloat("vertical", verticalAxis);
         this.anim.SetFloat("horizontal", horizontalAxis);
+         
+        
     }
 
 
