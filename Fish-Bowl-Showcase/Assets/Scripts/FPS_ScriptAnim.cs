@@ -19,6 +19,9 @@ public class FPS_ScriptAnim : MonoBehaviour
     Vector3 moveDirection = Vector3.zero;
     float rotationX = 0;
 
+    public bool isJumping = false;
+    public bool isJumpGrounded = false;
+
     [HideInInspector]
     public bool canMove = true;
 
@@ -31,7 +34,7 @@ public class FPS_ScriptAnim : MonoBehaviour
         Cursor.visible = false;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // We are grounded, so recalculate move direction based on axes
         Vector3 forward = transform.TransformDirection(Vector3.forward);
@@ -54,22 +57,29 @@ public class FPS_ScriptAnim : MonoBehaviour
         if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
         {
             moveDirection.y = jumpSpeed;
-            anim.SetBool("jump", true);
+            isJumping = true;
+            isJumpGrounded = false;
         }
         else
         {
             moveDirection.y = movementDirectionY;
+
+            if (!characterController.isGrounded) {
+                 // Apply gravity. Gravity is multiplied by deltaTime twice (once here, and once below
+                // when the moveDirection is multiplied by deltaTime). This is because gravity should be applied
+                // as an acceleration (ms^-2)
+                moveDirection.y -= gravity * Time.deltaTime;
+                if (isJumpGrounded) {
+                    isJumping = false;
+                }
+            }
         }
 
-        // Apply gravity. Gravity is multiplied by deltaTime twice (once here, and once below
-        // when the moveDirection is multiplied by deltaTime). This is because gravity should be applied
-        // as an acceleration (ms^-2)
-        if (!characterController.isGrounded)
-        {
-            moveDirection.y -= gravity * Time.deltaTime;
-        } else {
-            this.anim.SetBool("jump", false);
+        if (!characterController.isGrounded && isJumping) {
+            isJumpGrounded = true;
         }
+
+        anim.SetBool("jump", isJumping);
 
         // Move the controller
         characterController.Move(moveDirection * Time.deltaTime);
