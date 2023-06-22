@@ -128,11 +128,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 729fd36c9d4af4b4cb17e8e4436fa019, type: 3}
   m_PrefabInstance: {fileID: 1118313426}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &620906624 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 729fd36c9d4af4b4cb17e8e4436fa019, type: 3}
-  m_PrefabInstance: {fileID: 1118313426}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,6 +222,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!95 &793099096 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 729fd36c9d4af4b4cb17e8e4436fa019, type: 3}
+  m_PrefabInstance: {fileID: 1118313426}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,6 +374,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 729fd36c9d4af4b4cb17e8e4436fa019, type: 3}
       propertyPath: m_Name
       value: Remy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 729fd36c9d4af4b4cb17e8e4436fa019, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 729fd36c9d4af4b4cb17e8e4436fa019, type: 3}
       propertyPath: m_Controller
@@ -584,7 +588,6 @@ GameObject:
   - component: {fileID: 2117826362}
   - component: {fileID: 2117826361}
   - component: {fileID: 2117826363}
-  - component: {fileID: 2117826360}
   m_Layer: 0
   m_Name: FPS_Player
   m_TagString: Untagged
@@ -592,26 +595,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2117826360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2117826359}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf165ec3fff4f5846be613b3250be0b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkingSpeed: 7.5
-  runningSpeed: 11.5
-  jumpSpeed: 8
-  gravity: 20
-  playerCamera: {fileID: 963194227}
-  lookSpeed: 2
-  lookXLimit: 45
-  canMove: 1
 --- !u!143 &2117826361
 CharacterController:
   m_ObjectHideFlags: 0
@@ -631,13 +614,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 4
+  m_Height: 2.33
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 2, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!4 &2117826362
 Transform:
   m_ObjectHideFlags: 0
@@ -646,7 +629,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2117826359}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.08, z: 0}
+  m_LocalPosition: {x: 0, y: 4.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -668,7 +651,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74eb9ffc5b9271d45896dafd74a0def0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 620906624}
+  anim: {fileID: 793099096}
   walkingSpeed: 7.5
   runningSpeed: 11.5
   jumpSpeed: 8
@@ -676,4 +659,6 @@ MonoBehaviour:
   playerCamera: {fileID: 963194227}
   lookSpeed: 2
   lookXLimit: 45
+  isJumping: 0
+  leftGroundAfterJump: 0
   canMove: 1

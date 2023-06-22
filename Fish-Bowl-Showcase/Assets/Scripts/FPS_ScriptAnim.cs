@@ -20,7 +20,7 @@ public class FPS_ScriptAnim : MonoBehaviour
     float rotationX = 0;
 
     public bool isJumping = false;
-    public bool isJumpGrounded = false;
+    public bool leftGroundAfterJump = false;
 
     [HideInInspector]
     public bool canMove = true;
@@ -54,28 +54,28 @@ public class FPS_ScriptAnim : MonoBehaviour
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
-        if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
+        if (Input.GetButton("Jump") && canMove && characterController.isGrounded && !isJumping)
         {
             moveDirection.y = jumpSpeed;
             isJumping = true;
-            isJumpGrounded = false;
+            leftGroundAfterJump = false;
         }
         else
         {
             moveDirection.y = movementDirectionY;
+        }
 
-            if (!characterController.isGrounded) {
-                 // Apply gravity. Gravity is multiplied by deltaTime twice (once here, and once below
-                // when the moveDirection is multiplied by deltaTime). This is because gravity should be applied
-                // as an acceleration (ms^-2)
-                moveDirection.y -= gravity * Time.deltaTime;
-            } else {
-                if (isJumping) {
-                    if (isJumpGrounded) {
-                        isJumping = false;
-                    } else {
-                        isJumpGrounded = true;
-                    }
+        if (!characterController.isGrounded) {
+            // Apply gravity. Gravity is multiplied by deltaTime twice (once here, and once below
+            // when the moveDirection is multiplied by deltaTime). This is because gravity should be applied
+            // as an acceleration (ms^-2)
+            moveDirection.y -= gravity * Time.deltaTime;
+        } else {
+            if (isJumping) {
+                if (leftGroundAfterJump) {
+                    isJumping = false;
+                } else {
+                    leftGroundAfterJump = true;
                 }
             }
         }
