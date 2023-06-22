@@ -69,14 +69,15 @@ public class FPS_ScriptAnim : MonoBehaviour
                 // when the moveDirection is multiplied by deltaTime). This is because gravity should be applied
                 // as an acceleration (ms^-2)
                 moveDirection.y -= gravity * Time.deltaTime;
-                if (isJumpGrounded) {
-                    isJumping = false;
+            } else {
+                if (isJumping) {
+                    if (isJumpGrounded) {
+                        isJumping = false;
+                    } else {
+                        isJumpGrounded = true;
+                    }
                 }
             }
-        }
-
-        if (!characterController.isGrounded && isJumping) {
-            isJumpGrounded = true;
         }
 
         anim.SetBool("jump", isJumping);
