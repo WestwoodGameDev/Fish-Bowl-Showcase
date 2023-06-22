@@ -58,7 +58,6 @@ public class FPS_ScriptAnim : MonoBehaviour
         {
             moveDirection.y = jumpSpeed;
             isJumping = true;
-            leftGroundAfterJump = false;
         }
         else
         {
@@ -72,11 +71,8 @@ public class FPS_ScriptAnim : MonoBehaviour
             moveDirection.y -= gravity * Time.deltaTime;
         } else {
             if (isJumping) {
-                if (leftGroundAfterJump) {
+                if (moveDirection.y <= 0)
                     isJumping = false;
-                } else {
-                    leftGroundAfterJump = true;
-                }
             }
         }
 
